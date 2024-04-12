@@ -12,6 +12,7 @@ interface Props {
   defaultValues: JobFilterType;
 }
 
+//Server action to handle form submission. Redirects the user to the filtered jobs page with query params for filtering.
 async function filterJobs(formData: FormData) {
   "use server";
   const values = Object.fromEntries(formData.entries());

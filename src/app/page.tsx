@@ -1,6 +1,7 @@
 import JobFilterSidebar from "@/components/JobFilterSidebar";
 import JobResults from "@/components/JobResults";
 import { JobFilterType } from "@/lib/validation";
+import { Metadata } from "next";
 import React from "react";
 
 interface Props {
@@ -9,6 +10,33 @@ interface Props {
     type?: string;
     location?: string;
     remote?: string;
+  };
+}
+
+function getTitle({ query, type, location, remote }: JobFilterType) {
+  const titlePrefix = query
+    ? `${query} jobs`
+    : type
+      ? `${type} jobs`
+      : remote
+        ? "Remote jobs"
+        : "All jobs";
+
+  const titleSuffix = location ? ` in ${location}` : "";
+
+  return `${titlePrefix}${titleSuffix}`;
+}
+
+export function generateMetadata({
+  searchParams: { query, type, location, remote },
+}: Props): Metadata {
+  return {
+    title: `${getTitle({
+      query,
+      type,
+      location,
+      remote: remote === "true",
+    })} | Jobify`,
   };
 }
 

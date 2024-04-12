@@ -8,7 +8,10 @@ import { ThemeProvider } from "@/Providers/themeProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Jobify - Connecting Talents with Opportunities",
+  title: {
+    default: "Jobify - Connecting Talents with Opportunities",
+    template: "%s - Jobify",
+  },
   description:
     "Jobify is a premier job board platform, connecting talented individuals with job opportunities in various industries. Find your dream job today.",
   keywords: [

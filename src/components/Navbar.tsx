@@ -8,7 +8,7 @@ interface Props {}
 
 const Navbar = (props: Props) => {
   return (
-    <header className="fixed left-0 top-0 z-[20] w-full shadow-sm backdrop-blur">
+    <header className=" sticky left-0 top-0 z-[20] w-full shadow-sm backdrop-blur">
       <nav className="m-auto flex max-w-5xl items-center justify-between px-3 py-5">
         <Link href="/" className="flex items-center gap-3">
           <Image src={logo} width={120} height={50} alt="Jobify logo" />

@@ -268,7 +268,7 @@ const NotFound = (props: Props) => {
             </svg>
           </div>
           <p className="mb-4 p-2 text-sm text-yellow-300 md:text-base">
-            The stuff you were looking for doesn't exist
+            The stuff you were looking for doesn&apos;t exist
           </p>
           <a
             href="/"

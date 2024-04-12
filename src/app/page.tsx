@@ -10,6 +10,7 @@ interface Props {
     type?: string;
     location?: string;
     remote?: string;
+    page?: string;
   };
 }
 
@@ -41,7 +42,7 @@ export function generateMetadata({
 }
 
 export default async function Home({
-  searchParams: { query, type, location, remote },
+  searchParams: { query, type, location, remote, page },
 }: Props) {
   const filterValues: JobFilterType = {
     query,
@@ -60,9 +61,12 @@ export default async function Home({
           skills and aspirations with our curated selection of job listings.
         </p>
       </div>
-      <section className="flex flex-col gap-4 md:flex-row">
+      <section className="flex flex-col gap-4 md:flex-row w-full">
         <JobFilterSidebar defaultValues={filterValues} />
-        <JobResults filterValues={filterValues} />
+        <JobResults
+          filterValues={filterValues}
+          page={page ? parseInt(page) : undefined}
+        />
       </section>
     </main>
   );

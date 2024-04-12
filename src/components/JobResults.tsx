@@ -4,14 +4,17 @@ import prisma from "@/lib/prisma";
 import { JobFilterType } from "@/lib/validation";
 import { Prisma } from "@prisma/client";
 import JobNotFound from "./JobNotFound";
+import PaginationComponent from "./Pagination";
 
 interface Props {
   filterValues: JobFilterType;
+  page?: number;
 }
 
-const JobResults = async ({
-  filterValues: { query, type, location, remote },
-}: Props) => {
+const JobResults = async ({ filterValues, page = 1 }: Props) => {
+  const { query, type, location, remote } = filterValues;
+  const jobsPerPage = 6;
+  const skip = (page - 1) * jobsPerPage;
   const searchString = query
     ?.split(" ")
     .filter((word) => word.length > 0)
@@ -38,17 +41,34 @@ const JobResults = async ({
       { approved: true },
     ],
   };
-  const jobs = await prisma.job.findMany({
+  const jobsPromise = prisma.job.findMany({
     where,
     orderBy: {
       createdAt: "desc",
     },
+    take: jobsPerPage,
+    skip,
   });
-  
+
+  // Populate the count for pagination
+  const countPromise = prisma.job.count({ where });
+
+  const [jobs, count] = await Promise.all([jobsPromise, countPromise]);
+
   return (
     <div className="grow space-y-2">
       {jobs?.map((job) => <JobList job={job} key={job.id} />)}
       {jobs.length === 0 && <JobNotFound />}
+      {
+        /* Pagination goes here */
+        jobs.length > 0 && (
+          <PaginationComponent
+            currentPage={page}
+            totalPages={Math.ceil(count / jobsPerPage)}
+            filterValues={filterValues}
+          />
+        )
+      }
     </div>
   );
 };

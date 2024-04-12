@@ -192,3 +192,9 @@ const cities = [
     state: "California",
   },
 ];
+
+// Sort the cities array based on the city name
+cities.sort((a, b) => a.name.localeCompare(b.name));
+
+// Export the sorted cities array
+export { cities };

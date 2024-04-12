@@ -14,6 +14,7 @@ import Image from "next/image";
 import { formatSalary, relativeDate } from "@/lib/utils";
 import Badge from "./Badge";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 interface Props {
   job: Job;
@@ -39,14 +40,19 @@ const JobList = ({
   },
 }: Props) => {
   const { theme, systemTheme } = useTheme();
-  // Determine the current theme based on the system theme and user-selected theme
-  const currentTheme = theme === "system" ? systemTheme : theme;
+  const [currentTheme, setCurrentTheme] = useState("");
+
+  useEffect(() => {
+    // Determine the current theme based on the system theme and user-selected theme
+    setCurrentTheme((theme === "system" ? systemTheme : theme) as string);
+  }, [systemTheme, theme]);
+
   // Define the image source based on the theme mode
   const imageSrc =
     currentTheme === "dark"
       ? companyLogoPlaceholderLight
       : companyLogoPlaceholder;
-      
+
   return (
     <article className="flex cursor-pointer gap-3 rounded-lg border p-5 hover:bg-muted/60">
       <Image

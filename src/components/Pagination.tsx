@@ -1,6 +1,4 @@
 import { JobFilterType } from "@/lib/validation";
-import { ArrowLeftCircle, ArrowRightCircle } from "lucide-react";
-import Link from "next/link";
 import React from "react";
 import {
   Pagination,
@@ -34,39 +32,41 @@ const PaginationComponent = ({
     return `/?${searchParams.toString()}`;
   };
   return (
-    <Pagination className="pt-2">
-      <PaginationContent>
-        <PaginationItem>
-          <PaginationPrevious
-            href={generatePageLink(currentPage - 1)}
-            isActive
-            className={`${currentPage === 1 ? "pointer-events-none" : ""}`}
-          />
-        </PaginationItem>
-        {Array.from({ length: totalPages }, (_, index) => index + 1).map(
-          (page) => {
-            return (
-              <PaginationItem key={page}>
-                <PaginationLink
-                  href={generatePageLink(page)}
-                  isActive={currentPage === page}
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            );
-          },
-        )}
-        <PaginationItem>
-          <PaginationNext
-            href={generatePageLink(currentPage + 1)}
-            className={`${
-              currentPage === totalPages ? "pointer-events-none" : ""
-            }`}
-          />
-        </PaginationItem>
-      </PaginationContent>
-    </Pagination>
+    totalPages > 1 && (
+      <Pagination className="pt-2">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious
+              href={generatePageLink(currentPage - 1)}
+              isActive
+              className={`${currentPage === 1 ? "pointer-events-none" : ""}`}
+            />
+          </PaginationItem>
+          {Array.from({ length: totalPages }, (_, index) => index + 1).map(
+            (page) => {
+              return (
+                <PaginationItem key={page}>
+                  <PaginationLink
+                    href={generatePageLink(page)}
+                    isActive={currentPage === page}
+                  >
+                    {page}
+                  </PaginationLink>
+                </PaginationItem>
+              );
+            },
+          )}
+          <PaginationItem>
+            <PaginationNext
+              href={generatePageLink(currentPage + 1)}
+              className={`${
+                currentPage === totalPages ? "pointer-events-none" : ""
+              }`}
+            />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
+    )
   );
 };
 

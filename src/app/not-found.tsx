@@ -274,7 +274,7 @@ const NotFound = (props: Props) => {
             href="/"
             className="rounded border border-yellow-300 bg-transparent px-4 py-2 text-yellow-300 shadow hover:border-transparent hover:bg-yellow-300 hover:text-white hover:shadow-lg"
           >
-            Retry
+            Home
           </a>
         </div>
       </div>

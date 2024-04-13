@@ -38,7 +38,6 @@ const PaginationComponent = ({
           <PaginationItem>
             <PaginationPrevious
               href={generatePageLink(currentPage - 1)}
-              isActive
               className={`${currentPage === 1 ? "pointer-events-none" : ""}`}
             />
           </PaginationItem>

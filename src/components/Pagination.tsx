@@ -49,6 +49,9 @@ const PaginationComponent = ({
                   <PaginationLink
                     href={generatePageLink(page)}
                     isActive={currentPage === page}
+                    className={`${
+                      currentPage === page ? "pointer-events-none" : ""
+                    }`}
                   >
                     {page}
                   </PaginationLink>

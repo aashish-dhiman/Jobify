@@ -2,9 +2,7 @@ const jobTypes = [
   "Full-time",
   "Part-time",
   "Contract",
-  "Temporary",
   "Internship",
-  "Volunteer",
 ];
 // Sort the jobType array based on the name
 jobTypes.sort((a, b) => a.localeCompare(b));

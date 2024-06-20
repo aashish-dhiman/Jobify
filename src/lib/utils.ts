@@ -16,3 +16,11 @@ export function formatSalary(salary: number) {
 export function relativeDate(from: Date) {
   return formatDistanceToNowStrict(from, { addSuffix: true });
 }
+
+// create slug from title and replace whitespace with hyphen and remove special characters from string
+export function toSlug(str: string) {
+  return str
+    .toLowerCase()
+    .replace(/ /g, "-")
+    .replace(/[^\w-]+/g, "");
+}

@@ -6,7 +6,7 @@ interface Props {}
 const Footer = (props: Props) => {
   return (
     <footer className="border-t">
-      <div className="mx-auto max-w-5xl space-y-5 px-3 py-5">
+      <div className="mx-auto max-w-[1400px] space-y-5 px-3 py-5">
         <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-center">
           <div className="space-y-2">
             <h3 className="text-2xl font-bold">Jobify</h3>
@@ -15,16 +15,22 @@ const Footer = (props: Props) => {
             </p>
           </div>
           <div className="flex flex-wrap gap-5 text-sm text-muted-foreground">
-            <Link href="/about" className="hover:underline hover:text-primary">
+            <Link href="/about" className="hover:text-primary hover:underline">
               About Us
             </Link>
-            <Link href="/contact" className="hover:underline hover:text-primary">
+            <Link
+              href="/contact"
+              className="hover:text-primary hover:underline"
+            >
               Contact
             </Link>
-            <Link href="/terms" className="hover:underline hover:text-primary">
+            <Link href="/terms" className="hover:text-primary hover:underline">
               Terms of Service
             </Link>
-            <Link href="/privacy" className="hover:underline hover:text-primary">
+            <Link
+              href="/privacy"
+              className="hover:text-primary hover:underline"
+            >
               Privacy Policy
             </Link>
           </div>

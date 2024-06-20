@@ -21,7 +21,7 @@ function getTitle({ query, type, location, remote }: JobFilterType) {
       ? `${type} jobs`
       : remote
         ? "Remote jobs"
-        : "All jobs";
+        : "Available jobs";
 
   const titleSuffix = location ? ` in ${location}` : "";
 
@@ -51,7 +51,7 @@ export default async function Home({
     remote: remote === "true" ? true : false,
   };
   return (
-    <main className="m-auto my-10 max-w-5xl space-y-10 px-2 md:px-0 w-full">
+    <main className="my-10 space-y-10 px-2 md:px-20 w-full">
       <div className="space-y-3 text-center">
         <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
           {query || location || type || remote

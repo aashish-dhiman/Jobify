@@ -51,9 +51,10 @@ export const createJobSchema = z
       (value) => jobTypes.includes(value),
       "Invalid job type",
     ),
+    experience: z.string().max(100),
     companyName: requiredField.max(100),
     companyLogoUrl: companyLogoSchema,
-    description: z.string().max(1000).optional(),
+    description: z.string().max(1500).optional(),
     salary: numericRequiredField.max(9, "Salary can't be more than 9 digits"),
   })
   .and(applicationSchema)

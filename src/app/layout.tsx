@@ -46,7 +46,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} min-w-[420px]`}>
+      <body className={`${inter.className}`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
@@ -54,7 +54,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="pt-[80px] min-w-screen">{children}</main>
+          <main className="mx-auto max-w-[1400px] pt-[80px] w-full">{children}</main>
           <Footer />
         </ThemeProvider>
       </body>

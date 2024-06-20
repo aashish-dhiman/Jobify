@@ -33,7 +33,7 @@ const PaginationComponent = ({
   };
   return (
     totalPages > 1 && (
-      <Pagination className="pt-2">
+      <Pagination className="pt-2 overflow-hidden">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious

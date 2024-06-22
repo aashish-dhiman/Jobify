@@ -1,6 +1,6 @@
 import { formatMoney } from "@/lib/utils";
 import { Job } from "@prisma/client";
-import { Banknote, Briefcase, Globe2, MapPin } from "lucide-react";
+import { Banknote, Briefcase, Globe2, Layers3, MapPin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Markdown from "./Markdown";
@@ -14,6 +14,7 @@ export default function JobPage({
     title,
     description,
     companyName,
+    experience,
     applicationUrl,
     type,
     locationType,
@@ -58,6 +59,10 @@ export default function JobPage({
             <p className="flex items-center gap-1.5">
               <MapPin size={16} className="shrink-0" />
               {locationType}
+            </p>
+            <p className="flex items-center gap-1.5">
+              <Layers3 size={16} className="shrink-0" />
+              {experience || "0+ years"}
             </p>
             <p className="flex items-center gap-1.5">
               <Globe2 size={16} className="shrink-0" />

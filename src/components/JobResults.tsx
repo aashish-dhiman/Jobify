@@ -5,6 +5,7 @@ import { JobFilterType } from "@/lib/validation";
 import { Prisma } from "@prisma/client";
 import JobNotFound from "./JobNotFound";
 import PaginationComponent from "./Pagination";
+import Link from "next/link";
 
 interface Props {
   filterValues: JobFilterType;
@@ -56,8 +57,14 @@ const JobResults = async ({ filterValues, page = 1 }: Props) => {
   const [jobs, count] = await Promise.all([jobsPromise, countPromise]);
 
   return (
-    <div className="grow space-y-2">
-      {jobs?.map((job) => <JobList job={job} key={job.id} />)}
+    <div className="flex grow flex-col gap-2">
+      {jobs?.map((job) => (
+        <Link key={job.id} href={`/jobs/${job?.slug}`} passHref legacyBehavior>
+          <a target="_blank">
+            <JobList job={job} />
+          </a>
+        </Link>
+      ))}
       {jobs.length === 0 && <JobNotFound />}
       {
         /* Pagination goes here */

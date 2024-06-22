@@ -19,6 +19,9 @@ const Navbar = (props: Props) => {
         </Link>
         <div className="flex items-center gap-4">
           <ModeToggle />
+          <Button asChild variant="outline">
+            <Link href="/admin">Admin</Link>
+          </Button>
           <Button asChild>
             <Link href="/jobs/new">New Job</Link>
           </Button>

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^4.29.1",
+    "@google/generative-ai": "^0.13.0",
     "@hookform/resolvers": "^3.3.3",
     "@prisma/client": "^5.12.1",
     "@radix-ui/react-checkbox": "^1.0.4",
@@ -24,6 +25,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "date-fns": "^3.0.6",
+    "draft-js": "^0.11.7",
     "lucide-react": "^0.303.0",
     "markdown-draft-js": "^2.4.0",
     "nanoid": "^5.0.4",

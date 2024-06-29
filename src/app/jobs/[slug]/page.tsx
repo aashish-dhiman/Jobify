@@ -34,7 +34,7 @@ export async function generateMetadata({
   const job = await getJob(slug);
 
   return {
-    title: job.title,
+    title: `${job.title} - ${job.companyName}`,
   };
 }
 

@@ -21,6 +21,15 @@ import { X } from "lucide-react";
 import { draftToMarkdown } from "markdown-draft-js";
 import { useForm } from "react-hook-form";
 import RichTextEditor from "./RichTextEditor";
+import callGemini from "@/function/gemini";
+import GeminiButton from "./GeminiButton";
+import { useState, useEffect } from "react";
+import {
+  convertFromHTML,
+  ContentState,
+  convertToRaw,
+  RawDraftContentState,
+} from "draft-js";
 
 export default function NewJobForm() {
   const form = useForm<CreateJobType>({
@@ -35,8 +44,15 @@ export default function NewJobForm() {
     setValue,
     setFocus,
     register,
-    formState: { isSubmitting, errors,   },
+    formState: { isSubmitting, errors },
   } = form;
+
+  const [AIGeneratedContent, setAIGeneratedContent] = useState(
+    watch("description"),
+  );
+  const [rawDraftContent, setRawDraftContent] = useState<
+    RawDraftContentState | undefined
+  >(undefined);
 
   async function onSubmit(values: CreateJobType) {
     const formData = new FormData();
@@ -50,9 +66,86 @@ export default function NewJobForm() {
     try {
       await createJobPosting(formData);
     } catch (error) {
-        alert("Something went wrong, please try again.");
+      alert("Something went wrong, please try again.");
     }
   }
+
+  async function handleAutoComplete(values: CreateJobType) {
+    let detailsObject: any = {};
+    const requiredFields: (keyof CreateJobType)[] = [
+      "title",
+      "type",
+      "companyName",
+      "experience",
+      "salary",
+      "location",
+      "locationType",
+    ];
+
+    // Check if all required fields are filled
+    for (const key of requiredFields) {
+      if (!values[key]) {
+        alert("Please fill all the fields before using AI.");
+        return;
+      }
+    }
+
+    Object.entries(values).forEach(([key, value]) => {
+      if (value) {
+        detailsObject[key] = value;
+      }
+    });
+
+    // Concatenate job details into the prompt
+    const {
+      title,
+      type,
+      companyName,
+      experience,
+      location,
+      locationType,
+      salary,
+      applicationEmail,
+      applicationUrl,
+    } = values;
+
+    const prompt = `
+    Generate a job description in HTML tags with proper formatting under 1500 words for a ${title}, ${type} at ${companyName}.
+    Experience required: ${experience}.
+    Location: ${locationType === "Remote" ? "Remote" : location}.
+    Salary: ${salary} in INR.
+    How to apply: ${
+      applicationEmail
+        ? `Email: ${applicationEmail}`
+        : applicationUrl
+          ? `Website: ${applicationUrl}`
+          : "Not provided"
+    }
+    Expected skills include related to ${title} and experience.
+    Note: Make the section headings bold and the content under them in list.
+    Note: The job description should be engaging and informative and do not include any other information or customised text like "Please modify as needed or something else".
+  `;
+
+    try {
+      const description = await callGemini(prompt);
+      setAIGeneratedContent(description);
+      setFocus("description");
+    } catch (error) {
+      console.error("Error fetching job description:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (AIGeneratedContent) {
+      const blocksFromHTML = convertFromHTML(AIGeneratedContent);
+      const contentState = ContentState.createFromBlockArray(
+        blocksFromHTML.contentBlocks,
+        blocksFromHTML.entityMap,
+      );
+      const rawContentState = convertToRaw(contentState);
+      setRawDraftContent(rawContentState);
+    }
+  }, [AIGeneratedContent]);
 
   return (
     <main className="m-auto my-10 max-w-3xl space-y-10">
@@ -172,9 +265,9 @@ export default function NewJobForm() {
                       defaultValue=""
                       onChange={(e) => {
                         field.onChange(e);
-                        if (e.currentTarget.value === "Remote") {
-                          trigger("location");
-                        }
+                        // if (e.currentTarget.value === "Remote") {
+                        // trigger("location");
+                        // }
                       }}
                     >
                       <option value="" hidden>
@@ -216,6 +309,23 @@ export default function NewJobForm() {
                       <span className="text-sm">{watch("location")}</span>
                     </div>
                   )}
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={control}
+              name="salary"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Salary</FormLabel>
+                  <FormControl>
+                    <Input
+                      {...field}
+                      type="number"
+                      placeholder="Salary per month or annum"
+                    />
+                  </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
@@ -265,19 +375,25 @@ export default function NewJobForm() {
                 />
               </div>
             </div>
+
             <FormField
               control={control}
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <Label onClick={() => setFocus("description")}>
-                    Description
-                  </Label>
+                  <div className="flex items-center gap-5">
+                    <Label onClick={() => setFocus("description")}>
+                      Description
+                    </Label>
+
+                    <GeminiButton onClick={() => handleAutoComplete(watch())} />
+                  </div>
                   <FormControl>
                     <RichTextEditor
                       onChange={(draft) =>
                         field.onChange(draftToMarkdown(draft))
                       }
+                      AIGeneratedContent={rawDraftContent}
                       ref={field.ref}
                     />
                   </FormControl>
@@ -285,19 +401,7 @@ export default function NewJobForm() {
                 </FormItem>
               )}
             />
-            <FormField
-              control={control}
-              name="salary"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Salary</FormLabel>
-                  <FormControl>
-                    <Input {...field} type="number" placeholder="Salary per month or annum" />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+
             <LoadingButton type="submit" loading={isSubmitting}>
               Submit
             </LoadingButton>

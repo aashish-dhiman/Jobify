@@ -54,7 +54,7 @@ export const createJobSchema = z
     experience: z.string().max(100),
     companyName: requiredField.max(100),
     companyLogoUrl: companyLogoSchema,
-    description: z.string().max(2500).optional(),
+    description: z.string().max(3000).optional(),
     salary: numericRequiredField.max(9, "Salary can't be more than 9 digits"),
   })
   .and(applicationSchema)

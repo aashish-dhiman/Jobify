@@ -17,7 +17,7 @@ const Navbar = (props: Props) => {
           <Image src={logo} width={120} height={50} alt="logo" />
           <span className="sr-only">Jobify</span>
         </Link>
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-1 sm:gap-4">
           <ModeToggle />
           <Button asChild variant="outline">
             <Link href="/admin">Admin</Link>

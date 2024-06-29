@@ -1,3 +1,5 @@
+"use client";
+
 import { JobFilterType } from "@/lib/validation";
 import React from "react";
 import {
@@ -31,9 +33,12 @@ const PaginationComponent = ({
 
     return `/?${searchParams.toString()}`;
   };
+
+  // Determine the number of pagination links to show based on screen size
+  const isMobile = window.innerWidth < 640;
   return (
     totalPages > 1 && (
-      <Pagination className="pt-2 overflow-hidden">
+      <Pagination className="overflow-hidden pt-2">
         <PaginationContent>
           <PaginationItem>
             <PaginationPrevious
@@ -43,19 +48,36 @@ const PaginationComponent = ({
           </PaginationItem>
           {Array.from({ length: totalPages }, (_, index) => index + 1).map(
             (page) => {
-              return (
-                <PaginationItem key={page}>
-                  <PaginationLink
-                    href={generatePageLink(page)}
-                    isActive={currentPage === page}
-                    className={`${
-                      currentPage === page ? "pointer-events-none" : ""
-                    }`}
-                  >
-                    {page}
-                  </PaginationLink>
-                </PaginationItem>
-              );
+              if (isMobile) {
+                if (page === 1 || page === totalPages || page === currentPage)
+                  return (
+                    <PaginationItem key={page}>
+                      <PaginationLink
+                        href={generatePageLink(page)}
+                        isActive={currentPage === page}
+                        className={`${
+                          currentPage === page ? "pointer-events-none" : ""
+                        }`}
+                      >
+                        {page}
+                      </PaginationLink>
+                    </PaginationItem>
+                  );
+              } else {
+                return (
+                  <PaginationItem key={page}>
+                    <PaginationLink
+                      href={generatePageLink(page)}
+                      isActive={currentPage === page}
+                      className={`${
+                        currentPage === page ? "pointer-events-none" : ""
+                      }`}
+                    >
+                      {page}
+                    </PaginationLink>
+                  </PaginationItem>
+                );
+              }
             },
           )}
           <PaginationItem>

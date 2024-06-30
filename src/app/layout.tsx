@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/Providers/themeProvider";
+import { Toaster } from "@/components/ui/toaster";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -54,9 +55,12 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <Navbar />
-          <main className="mx-auto max-w-[1400px] pt-[80px] w-full">{children}</main>
+          <main className="mx-auto w-full max-w-[1400px] pt-[80px]">
+            {children}
+          </main>
           <Footer />
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

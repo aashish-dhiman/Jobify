@@ -30,8 +30,11 @@ import {
   convertToRaw,
   RawDraftContentState,
 } from "draft-js";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function NewJobForm() {
+  const { toast } = useToast();
+
   const form = useForm<CreateJobType>({
     resolver: zodResolver(createJobSchema),
   });
@@ -86,7 +89,12 @@ export default function NewJobForm() {
     // Check if all required fields are filled
     for (const key of requiredFields) {
       if (!values[key]) {
-        alert("Please fill all the fields before using AI.");
+        toast({
+          variant: "destructive",
+          title: "Uh oh! Required Fields Missing.",
+          description:
+            "Please fill all fields before using the AI-generated job description feature.",
+        });
         return;
       }
       setShowLoader(true);
@@ -148,7 +156,7 @@ export default function NewJobForm() {
       const rawContentState = convertToRaw(contentState);
       setRawDraftContent(rawContentState);
     }
-  }, [AIGeneratedContent]);
+  }, [AIGeneratedContent, setValue]);
 
   return (
     <main className="m-auto my-10 max-w-3xl space-y-10">
@@ -389,7 +397,10 @@ export default function NewJobForm() {
                       Description
                     </Label>
 
-                    <GeminiButton onClick={() => handleAutoComplete(watch())} showLoader={showLoader} />
+                    <GeminiButton
+                      onClick={() => handleAutoComplete(watch())}
+                      showLoader={showLoader}
+                    />
                   </div>
                   <FormControl>
                     <RichTextEditor

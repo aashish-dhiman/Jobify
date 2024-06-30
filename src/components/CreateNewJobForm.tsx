@@ -60,7 +60,6 @@ export default function NewJobForm() {
 
   async function onSubmit(values: CreateJobType) {
     const formData = new FormData();
-    console.log("values: ", values);
 
     Object.entries(values).forEach(([key, value]) => {
       if (value) {
@@ -71,7 +70,12 @@ export default function NewJobForm() {
     try {
       await createJobPosting(formData);
     } catch (error) {
-      alert("Something went wrong, please try again.");
+      toast({
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description:
+          "Please try again later or try updating the job description.",
+      });
     }
   }
 

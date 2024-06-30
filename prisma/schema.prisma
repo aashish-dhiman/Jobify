@@ -17,12 +17,12 @@ model Job {
   slug             String   @unique()
   title            String
   type             String
-  description      String?
+  description      String
   companyName      String
   location         String?
   locationType     String
   salary           Int
-  experience       String?
+  experience       String
   applicationEmail String?
   applicationUrl   String?
   companyLogoUrl   String?

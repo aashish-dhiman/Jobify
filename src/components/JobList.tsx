@@ -82,7 +82,7 @@ const JobList = ({
           </p>
           <p className="flex items-center gap-1.5">
             <Layers3 size={16} className="shrink-0" />
-            {experience || "0+ years"}
+            {experience ?? "Experience NA"}
           </p>
           <p className="flex items-center gap-1.5">
             <Banknote size={16} className="shrink-0" />

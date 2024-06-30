@@ -60,6 +60,7 @@ export default function NewJobForm() {
 
   async function onSubmit(values: CreateJobType) {
     const formData = new FormData();
+    console.log("values: ", values);
 
     Object.entries(values).forEach(([key, value]) => {
       if (value) {
@@ -95,6 +96,7 @@ export default function NewJobForm() {
           description:
             "Please fill all fields before using the AI-generated job description feature.",
         });
+        setShowLoader(false);
         return;
       }
       setShowLoader(true);
@@ -156,7 +158,7 @@ export default function NewJobForm() {
       const rawContentState = convertToRaw(contentState);
       setRawDraftContent(rawContentState);
     }
-  }, [AIGeneratedContent, setValue]);
+  }, [AIGeneratedContent]);
 
   return (
     <main className="m-auto my-10 max-w-3xl space-y-10">

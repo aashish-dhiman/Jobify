@@ -53,6 +53,7 @@ export default function NewJobForm() {
   const [rawDraftContent, setRawDraftContent] = useState<
     RawDraftContentState | undefined
   >(undefined);
+  const [showLoader, setShowLoader] = useState(false);
 
   async function onSubmit(values: CreateJobType) {
     const formData = new FormData();
@@ -88,6 +89,7 @@ export default function NewJobForm() {
         alert("Please fill all the fields before using AI.");
         return;
       }
+      setShowLoader(true);
     }
 
     Object.entries(values).forEach(([key, value]) => {
@@ -130,6 +132,7 @@ export default function NewJobForm() {
       const description = await callGemini(prompt);
       setAIGeneratedContent(description);
       setFocus("description");
+      setShowLoader(false);
     } catch (error) {
       console.error("Error fetching job description:", error);
     }
@@ -386,7 +389,7 @@ export default function NewJobForm() {
                       Description
                     </Label>
 
-                    <GeminiButton onClick={() => handleAutoComplete(watch())} />
+                    <GeminiButton onClick={() => handleAutoComplete(watch())} showLoader={showLoader} />
                   </div>
                   <FormControl>
                     <RichTextEditor

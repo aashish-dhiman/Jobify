@@ -1,7 +1,7 @@
 "use client";
 
 import { JobFilterType } from "@/lib/validation";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -35,7 +35,11 @@ const PaginationComponent = ({
   };
 
   // Determine the number of pagination links to show based on screen size
-  const isMobile = window.innerWidth < 640;
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 640);
+  }, []);
+  
   return (
     totalPages > 1 && (
       <Pagination className="overflow-hidden pt-2">

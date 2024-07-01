@@ -9,7 +9,7 @@ interface Props {}
 const Navbar = (props: Props) => {
   return (
     <header className="fixed left-0 top-0 z-[20] w-full shadow-sm backdrop-blur">
-      <nav className="m-auto flex max-w-[1400px] items-center justify-between px-3 py-5">
+      <nav className="m-auto flex max-w-[1400px] items-center justify-between px-1 py-5 sm:px-3">
         <Link
           href="/"
           className="flex items-center gap-3 overflow-hidden rounded-sm"

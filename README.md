@@ -18,6 +18,7 @@ Jobify is a robust and seamless job board platform built to enhance the job sear
 - **Next.js**: For server-side rendering, static site generation, and building the frontend.
 - **Tailwind CSS**: For styling the application with a modern, responsive design.
 - **TypeScript**: Ensures type safety and robust code.
+- **Zod**: Ensures form validation.
 - **Google Gemini**: For automating and improving job descriptions.
 - **PostgreSQL**: Database management system for storing job postings and user data.
 - **Prisma ORM**: For interacting with the PostgreSQL database in a type-safe way.

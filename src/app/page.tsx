@@ -1,75 +1,23 @@
-import JobFilterSidebar from "@/components/JobFilterSidebar";
-import JobResults from "@/components/JobResults";
-import { JobFilterType } from "@/lib/validation";
-import { Metadata } from "next";
-import React from "react";
+import { BackgroundLines } from "@/components/ui/background-lines";
+import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
-interface Props {
-  searchParams: {
-    query?: string;
-    type?: string;
-    location?: string;
-    remote?: string;
-    page?: string;
-  };
-}
-
-function getTitle({ query, type, location, remote }: JobFilterType) {
-  const titlePrefix = query
-    ? `${query} jobs`
-    : type
-      ? `${type} jobs`
-      : remote
-        ? "Remote jobs"
-        : "Available jobs";
-
-  const titleSuffix = location ? ` in ${location}` : "";
-
-  return `${titlePrefix}${titleSuffix}`;
-}
-
-export function generateMetadata({
-  searchParams: { query, type, location, remote },
-}: Props): Metadata {
-  return {
-    title: `${getTitle({
-      query,
-      type,
-      location,
-      remote: remote === "true",
-    })} | Jobify`,
-  };
-}
-
-export default async function Home({
-  searchParams: { query, type, location, remote, page },
-}: Props) {
-  const filterValues: JobFilterType = {
-    query,
-    type,
-    location,
-    remote: remote === "true" ? true : false,
-  };
+export default function Home() {
   return (
-    <main className="my-10 space-y-10 px-2 md:px-20 w-full">
-      <div className="space-y-3 text-center">
-        <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight">
-          {query || location || type || remote
-            ? getTitle(filterValues)
-            : "Discover Your Next Career Move"}
-        </h1>
-        <p className="text-muted-foreground">
-          Explore a world of opportunities. <br /> Find the perfect fit for your
-          skills and aspirations with our curated selection of job listings.
+    <div className="min-h-screen bg-gray-50">
+      <BackgroundLines className="flex w-full flex-col items-center justify-center px-4">
+        <h2 className="relative z-20 bg-gradient-to-b from-neutral-900 to-neutral-700 bg-clip-text py-2 text-center font-sans text-2xl font-bold tracking-tight text-transparent dark:from-neutral-600 dark:to-white md:py-10 md:text-4xl lg:text-7xl">
+          Jobify - <br /> AI-Powered Job Descriptions
+        </h2>
+        <p className="mx-auto max-w-xl text-center text-sm text-neutral-700 dark:text-neutral-400 md:text-lg">
+          Automate job descriptions with AI and simplify hiring.
         </p>
-      </div>
-      <section className="flex w-full flex-col gap-4 md:flex-row">
-        <JobFilterSidebar defaultValues={filterValues} />
-        <JobResults
-          filterValues={filterValues}
-          page={page ? parseInt(page) : undefined}
-        />
-      </section>
-    </main>
+        <Link href="/jobs" passHref>
+          <Button className="relative z-[100] mt-6 bg-black text-white hover:bg-gray-800 dark:bg-gray-800">
+            Browse Jobs
+          </Button>
+        </Link>
+      </BackgroundLines>
+    </div>
   );
 }

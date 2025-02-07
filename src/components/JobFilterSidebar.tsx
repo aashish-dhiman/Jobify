@@ -25,7 +25,7 @@ async function filterJobs(formData: FormData) {
     ...(remote && { remote: "true" }),
   });
 
-  redirect(`/?${searchParams.toString()}`);
+  redirect(`/jobs/?${searchParams.toString()}`);
 }
 
 const JobFilterSidebar = ({ defaultValues }: Props) => {

@@ -43,9 +43,8 @@ const Footer = (props: Props) => {
             rel="noreferrer"
             className="transition-all duration-200 ease-in-out hover:text-primary"
           >
-            Aashish Dhiman
+            Jobify
           </a>
-          .
         </div>
       </div>
     </footer>

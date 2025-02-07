@@ -18,7 +18,7 @@ const GeminiButton: React.FC<GeminiButtonProps> = ({ onClick, showLoader }) => {
 
   return (
     <button
-      className="rounded-md bg-gradient-to-br from-purple-600 to-pink-600 px-2 py-1 text-white hover:outline "
+      className="rounded-md bg-gradient-to-br from-purple-600 to-pink-600 px-2 py-1 text-white hover:outline flex items-center h-9"
       onClick={handleButtonClick}
     >
       {showLoader ? (
